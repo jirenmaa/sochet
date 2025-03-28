@@ -1,1 +1,6 @@
+sample
+
 .env
+
+server.log
+client.log
