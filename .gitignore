@@ -1,4 +1,5 @@
 sample
+__pycache__/*
 
 .env
 
