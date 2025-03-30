@@ -11,4 +11,5 @@ WHITELIST = getenv("WHITELIST").split(",")
 
 # logging settings
 LOGGING_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-LOG_FILE = "server/logs/server.log"
+SERVER_LOG_FILE = "server/logs/server.log"
+CLIENT_LOG_FILE = "client/logs/client.log"
