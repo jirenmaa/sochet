@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug server.server",
+        "type": "debugpy",
+        "request": "launch",
+        "module": "server.server",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Debug client.gui",
+        "type": "debugpy",
+        "request": "launch",
+        "module": "client.gui",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      }
+    ]
+  }
+  

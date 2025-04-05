@@ -1,7 +1,9 @@
 sample
-__pycache__/*
+__pycache__/
 
 .env
 
 server.log
 client.log
+
+messages.json

@@ -1,1 +1,1 @@
-![](https://github.com/jirenmaa/socket-sample/assets/test-demo.gif)
+![preview](assets/example.gif)
