@@ -273,7 +273,7 @@ class Server:
         try:
             client_socket.send(message.encode("utf-8"))
         except Exception as e:
-            server_logger.error(f"Error sending message to client {client_socket}: {e}")
+            server_logger.error(f"Error sending message to client: {client_socket}: {e}")
 
     def process_client_message(self, client_socket: socket, username: str):
         """
@@ -306,6 +306,16 @@ class Server:
 
         except timeout:
             return True  # just loop again
+        except ConnectionResetError as e:
+            # https://docs.python.org/3/library/exceptions.html#ConnectionResetError
+            server_logger.warning(f"Client disconnected abruptly: {client_socket} ({e})")
+            self.remove_client(client_socket)
+            return False
+        except BrokenPipeError as e:
+            # https://docs.python.org/3/library/exceptions.html#BrokenPipeError
+            server_logger.warning(f"Broken pipe — client probably closed: {client_socket} ({e})")
+            self.remove_client(client_socket)
+            return False
         except Exception as e:
             server_logger.error(f"Error receiving message from {username}: {e}")
             return False
