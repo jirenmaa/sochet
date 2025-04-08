@@ -273,7 +273,7 @@ class Server:
         try:
             client_socket.send(message.encode("utf-8"))
         except Exception as e:
-            server_logger.error(f"Error sending message to client: {client_socket}: {e}")
+            server_logger.error(f"Error sending message to client {client_socket}: {e}")
 
     def process_client_message(self, client_socket: socket, username: str):
         """
@@ -318,7 +318,7 @@ class Server:
             return False
         except Exception as e:
             server_logger.error(f"Error receiving message from {username}: {e}")
-            return False
+            return True
 
 
 if __name__ == "__main__":
