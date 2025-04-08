@@ -135,6 +135,11 @@ class Client:
                     self.gui.display_message(f"\n\n{response}", tag="info")
                     continue
 
+                if response.startswith("ACTIVE_USERS::"):
+                    users = response.replace("ACTIVE_USERS::", "").split(",")
+                    self.gui.update_active_users(users)
+                    continue
+
                 user, timestmp, msg = response.split("::")
 
                 message = f"\n\n{user} ({timestmp})\n↳ {msg}"

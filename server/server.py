@@ -205,6 +205,7 @@ class Server:
                 # get the lock to ensure thread-safe access to the shared self.clients dictionary
                 # prevents race conditions when multiple threads try to modify the dictionary simultaneously
                 self.clients[client_socket] = username
+                self.broadcast_active_users()
 
             client_socket.settimeout(1.0)
 
@@ -240,6 +241,18 @@ class Server:
             if not stopped:
                 self.broadcast(f"{username} has left the chat!")
                 server_logger.info(f"User '{username}' disconnected.")
+                self.broadcast_active_users()
+
+    def broadcast_active_users(self):
+        """
+        Sends the list of currently active usernames to the target client.
+        """
+        with self.lock:
+            user_list = list(self.clients.values())
+            message = f"ACTIVE_USERS::{','.join(user_list)}"
+
+            for client_socket in self.clients.keys():
+                self.handle_message(client_socket, message)
 
     def broadcast(self, message: str, exclude_socket=None):
         """

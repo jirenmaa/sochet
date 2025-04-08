@@ -88,9 +88,11 @@ class ChatGUI:
         )
         self.user_listbox.pack(fill=tk.BOTH, expand=True)
 
-        # insert dummy users with left spacing
-        for user in ["alice", "bob", "charlie", "diana", "eve"]:
-            self.user_listbox.insert(tk.END, f" {user}")
+    def update_active_users(self, users: list[str]):
+        self.user_listbox.delete(0, tk.END)
+
+        for user in users:
+            self.user_listbox.insert(tk.END, user)
 
     def attempt_login(self):
         username = self.username_var.get()
