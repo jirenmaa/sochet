@@ -142,7 +142,10 @@ class Client:
 
                 user, timestmp, msg = response.split("::")
 
-                message = f"\n\n{user} ({timestmp})\n↳ {msg}"
+                dt = datetime.fromisoformat(timestmp)
+                formatted_time = dt.strftime("%d %b %Y, %H:%M")
+
+                message = f"\n\n{user} ({formatted_time})\n↳ {msg}"
 
                 self.gui.display_message(message)
             except Exception as e:
