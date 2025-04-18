@@ -2,18 +2,18 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Debug server.server",
+        "name": "Debug server",
         "type": "debugpy",
         "request": "launch",
-        "module": "server.server",
+        "module": "run_server",
         "console": "integratedTerminal",
         "justMyCode": true
       },
       {
-        "name": "Debug client.gui",
+        "name": "Debug client",
         "type": "debugpy",
         "request": "launch",
-        "module": "client.gui",
+        "module": "run_client",
         "console": "integratedTerminal",
         "justMyCode": true
       }

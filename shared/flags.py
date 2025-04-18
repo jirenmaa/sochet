@@ -1,0 +1,34 @@
+# authentication responses
+AUTH_OK = "AUTH_OK"
+AUTH_BAN = "AUTH_BAN"
+AUTH_DENIED = "AUTH_DENIED"
+AUTH_INVALID = "AUTH_INVALID"
+
+# system-level notices
+SYS_SERVER_CLOSED = "SYS_SERVER_CLOSED"
+
+# user state updates
+USER_LIST_UPDATE = "USER_LIST_UPDATE"
+
+# admin-triggered actions
+ADMIN_KICK = "ADMIN_KICK"
+ADMIN_BAN = "ADMIN_BAN"
+ADMIN_MUTE = "ADMIN_MUTE"
+ADMIN_MSG = "ADMIN_MSG"
+
+# client-triggered actions
+CLIENT_QUIT = "CLIENT_QUIT"
+
+FLAGS = [
+    AUTH_OK,
+    AUTH_BAN,
+    AUTH_DENIED,
+    AUTH_INVALID,
+    SYS_SERVER_CLOSED,
+    USER_LIST_UPDATE,
+    ADMIN_KICK,
+    ADMIN_BAN,
+    ADMIN_MUTE,
+    ADMIN_MSG,
+    CLIENT_QUIT,
+]

@@ -9,6 +9,7 @@ class ChatGUI:
         self.root = root
         self.root.title("Sochet Client")
         self.client = None
+        self.message = messagebox
 
         # ====== Frame setup ======
         self.login_frame = tk.Frame(root)
@@ -22,8 +23,8 @@ class ChatGUI:
         self.login_frame.pack(padx=20, pady=20)
 
     def build_login_ui(self):
-        self.username_var = tk.StringVar()
-        self.password_var = tk.StringVar()
+        self.username_var = tk.StringVar(value="admin")
+        self.password_var = tk.StringVar(value="admin")
 
         tk.Label(self.login_frame, text="Username:").pack()
         tk.Entry(self.login_frame, textvariable=self.username_var).pack()
@@ -99,15 +100,17 @@ class ChatGUI:
         password = self.password_var.get()
 
         if not username or not password:
-            messagebox.showerror("Error", "Username and password are required")
+            self.message.showerror("Error", "Username and password are required")
             return
 
         self.client = Client(self, username, password)
-        if self.client.connect_to_server():
+        msg, error = self.client.connect_to_server()
+
+        if not error:
             self.show_chat_ui()
             self.display_message("✅ Connected to the server!\n")
         else:
-            messagebox.showerror("Login Failed", "Invalid username or password")
+            self.message.showerror("Login Failed", msg)
 
     def show_chat_ui(self):
         """Switch to chat UI after login."""
@@ -121,32 +124,21 @@ class ChatGUI:
 
         try:
             # gracefully disconnect the client
-            if message.lower() == "!quit":
+            if message.lower() == "/quit":
                 # notify server before closing connection
-                if self.client:
-                    self.client.write_message("CLIENT_QUIT")
-
-                self.display_message("You have left the chat.")
-                if self.client:
-                    self.client.disconnect_from_server()
+                self.client.write_message(flag="CLIENT_QUIT")
+                self.client.disconnect_from_server()
 
                 self.root.quit()
                 return
 
-            self.client.write_message(message)
+            self.client.write_message(message=message)
             self.message_entry.delete(0, tk.END)
         except ValueError:
-            messagebox.showerror("Error", "No active client connection found.")
+            self.message.showerror("Error", "No active client connection found.")
 
     def display_message(self, message, tag=None):
         self.chat_area.config(state="normal")
         self.chat_area.insert(tk.END, message, tag if tag else ())
         self.chat_area.config(state="disabled")
         self.chat_area.see(tk.END)
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.geometry("700x550")
-    gui = ChatGUI(root)
-    root.mainloop()
